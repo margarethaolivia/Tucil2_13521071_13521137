@@ -2,6 +2,8 @@ import random
 import math
 import time
 
+import matplotlib.pyplot as plt
+
 print("Pencarian Pasangan Titik Terdekat")
 n = int(input("Masukkan banyaknya titik : "))
 r = int(input("Masukkan dimensi vektor  : "))
@@ -40,6 +42,19 @@ print()
 print('Pasangan Terdekat')
 print(f'Titik 1 : {points[p1]}')
 print(f'Titik 2 : {points[p2]}')
-print(f'Jarak   : {round(distance, 3)}')
+print(f'Jarak   : {round(closest, 3)}')
 print(f'Banyak Perhitungan : {count}')
 print(f'Waktu Eksekusi     : {end_time - start_time} milisekon')
+
+if r == 3:
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    for p in points:
+        x = p[0]
+        y = p[1]
+        z = p[2]
+        ax.scatter(x, y, z, color='black')
+    ax.scatter(points[p1][0], points[p1][1], points[p1][2], color='red')
+    ax.scatter(points[p2][0], points[p2][1], points[p2][2], color='red')
+
+    plt.show()
