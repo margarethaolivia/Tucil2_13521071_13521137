@@ -95,6 +95,6 @@ def getClosestPair(points):
     closestPair = DnC(points.copy())
     return closestPair[0], closestPair[1], closestPair[2], DISTANCE_FUNCTION_CALLED
 
-if __name__ == "__main__":
-    dist, idx1, idx2, called = getClosestPair([(0, [0, 0, 0]), (1, [1, 2, 2]), (2, [10, 10, 10])])
-    print(f"dist = {dist}, idx1 = {idx1}, idx2 = {idx2}, called = {called}")
+# if __name__ == "__main__":
+#     dist, idx1, idx2, called = getClosestPair([(0, [0, 0, 0]), (1, [1, 2, 2]), (2, [10, 10, 10]), (3, [1, 1, 1])])
+#     print(f"dist = {dist}, idx1 = {idx1}, idx2 = {idx2}, called = {called}")

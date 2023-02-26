@@ -1,19 +1,24 @@
 import random
 import math
 import time
-
 import matplotlib.pyplot as plt
+
+import dnc
+import bf
 
 
 def generatePoints(n, r):
     points = []
+    p = []
     for i in range(n):
         point = []
         for j in range(r):
             x = round(random.uniform(-10**3, 10**3), 3)
             point.append(x)
+        t = (i, point)
         points.append(point)
-    return points
+        p.append(t)
+    return points, p
 
 
 def printPoint(point):
@@ -42,37 +47,21 @@ n = int(input("Masukkan banyaknya titik : "))
 r = int(input("Masukkan dimensi vektor  : "))
 print()
 
-points = generatePoints(n, r)
-
-closest = 999 ** 9
-p1 = 0
-p2 = 0
-count = 0
-
-print()
-print('Memproses...')
-print()
-
-# Brute Force
-startTime = time.time() * 1000
-for i in range(n):
-    for j in range(i+1, n):
-        distance = 0
-        for k in range(r):
-            distance += (points[i][k] - points[j][k]) ** 2
-        distance = math.sqrt(distance)
-        count += 1
-        if distance < closest:
-            closest = distance
-            p1 = i
-            p2 = j
-endTime = time.time() * 1000
+points, p = generatePoints(n, r)
 
 print(f'MEMBANGKITKAN {n} TITIK ACAK')
 for point in points:
     printPoint(point)
 
 print()
+print('Memproses dengan algoritma Brute Force...')
+print()
+
+# Brute Force
+startTime = time.time() * 1000
+closest, p1, p2, count = bf.bruteForce(n, r, points)
+endTime = time.time() * 1000
+
 print('ALGORITMA BRUTEFORCE')
 print(f'Titik 1 : ', end='')
 printPoint(points[p1])
@@ -83,8 +72,24 @@ print(f'Banyak Perhitungan : {count}')
 print(f'Waktu Eksekusi     : {endTime - startTime} milisekon')
 
 print()
+print('Memproses dengan algoritma Divide and Conquer...')
+print()
+
+# DnC
+startTime = time.time() * 1000
+closest, p2, p1, count = dnc.getClosestPair(p)
+endTime = time.time() * 1000
+
+
 print('ALGORITMA DIVIDE AND CONQUER')
 # algo divide and conquer
+print(f'Titik 1 : ', end='')
+printPoint(points[p1])
+print(f'Titik 2 : ', end='')
+printPoint(points[p2])
+print(f'Jarak   : {round(closest, 3)}')
+print(f'Banyak Perhitungan : {count}')
+print(f'Waktu Eksekusi     : {endTime - startTime} milisekon')
 
 if r == 3:
     print()
