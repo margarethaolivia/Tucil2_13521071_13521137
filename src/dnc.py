@@ -19,7 +19,7 @@ def euclideanDistance(p1, p2):
         total += (p1[i] - p2[i]) ** 2
     return math.sqrt(total)
 
-def DnC(points):
+def DnC(points, dimension):
     """ Return closest pair from points using divide and conquer
 
     Args:
@@ -36,17 +36,19 @@ def DnC(points):
     if len(points) == 2:
         return euclideanDistance(points[0][1], points[1][1]), points[0][0], points[1][0]
     
-    dimension = 0
-    
     # Divide points
+    if dimension == len(points[0][1]):
+        dimension = 0
+        
     points.sort(key=lambda x: x[1][dimension])
     mid = len(points)//2
     l_points = points[:mid]
     r_points = points[mid:]
 
     # Conquer each part
-    l_best, l_index1, l_index2 = DnC(l_points)
-    r_best, r_index1, r_index2 = DnC(r_points)
+
+    l_best, l_index1, l_index2 = DnC(l_points, dimension + 1)
+    r_best, r_index1, r_index2 = DnC(r_points, dimension + 1)
 
     # Merge both part
     if l_best != None and (r_best == None or l_best < r_best):
@@ -92,7 +94,7 @@ def getClosestPair(points):
     """
     global DISTANCE_FUNCTION_CALLED
     DISTANCE_FUNCTION_CALLED = 0
-    closestPair = DnC(points.copy())
+    closestPair = DnC(points.copy(), 0)
     return closestPair[0], closestPair[1], closestPair[2], DISTANCE_FUNCTION_CALLED
 
 # if __name__ == "__main__":
