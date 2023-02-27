@@ -37,43 +37,46 @@ def DnC(points, dimension):
         return euclideanDistance(points[0][1], points[1][1]), points[0][0], points[1][0]
     
     # Divide points
-    if dimension == len(points[0][1]):
-        dimension = 0
-        
     points.sort(key=lambda x: x[1][dimension])
     mid = len(points)//2
     l_points = points[:mid]
     r_points = points[mid:]
+    midpoint = l_points[-1][1][dimension]
 
     # Conquer each part
-
-    l_best, l_index1, l_index2 = DnC(l_points, dimension + 1)
-    r_best, r_index1, r_index2 = DnC(r_points, dimension + 1)
+    nextdimension = (dimension + 1) % len(points[0][1])
+    l_best, l_index1, l_index2 = DnC(l_points, nextdimension)
+    r_best, r_index1, r_index2 = DnC(r_points, nextdimension)
 
     # Merge both part
     if l_best != None and (r_best == None or l_best < r_best):
         best, index1, index2 = l_best, l_index1, l_index2
     else:
         best, index1, index2 = r_best, r_index1, r_index2
+    # l_points.sort(key=lambda x:x[1][nextdimension])
+    # r_points.sort(key=lambda x:x[1][nextdimension])
 
-    midpoint = l_points[-1][1][dimension]
-    l_start = len(l_points)
+    l_mid = []
     for i in range(len(l_points)):
         if midpoint - l_points[i][1][dimension] < best:
-            l_start = i
-            break
-    
-    r_end = len(r_points)
+            l_mid.append(l_points[i])
+            
+    r_mid = []
     for i in range(len(r_points)):
-        if r_points[i][1][dimension] - midpoint > best:
-            r_end = i
-            break
-    
-    for i in range(l_start, len(l_points)):
-        for j in range(0, r_end):
-            dist = euclideanDistance(l_points[i][1], r_points[j][1])
+        if r_points[i][1][dimension] - midpoint < best:
+            r_mid.append(r_points[i])
+            
+    r_start = 0
+    for x in l_mid:
+        while r_start + 1 < len(r_mid) and x[1][nextdimension] - r_mid[r_start][1][nextdimension] > best:
+            r_start += 1
+        for j in range(r_start, len(r_mid)):
+            if r_mid[j][1][nextdimension] - x[1][nextdimension] > best:
+                break
+            dist = euclideanDistance(x[1], r_mid[j][1])
             if dist < best:
-                best, index1, index2 = dist, l_points[i][0], r_points[j][0]
+                best, index1, index2 = dist, x[0], r_mid[j][0]
+
 
     return best, index1, index2
 
