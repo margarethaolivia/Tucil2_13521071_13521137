@@ -1,4 +1,5 @@
 import math
+import sort
 
 def euclideanDistance(p1, p2):
     """ Return euclidean distance of two points. \n
@@ -34,10 +35,12 @@ def DnC(points, dimension):
     if len(points) == 1:
         return None, None, None
     if len(points) == 2:
+        points = sort.merge_sort(points, lambda x:x[1][dimension])
         return euclideanDistance(points[0][1], points[1][1]), points[0][0], points[1][0]
     
     # Divide points
-    points.sort(key=lambda x: x[1][dimension])
+    # points.sort(key=lambda x: x[1][dimension])
+    points = sort.merge_sort(points, lambda x:x[1][dimension])
     mid = len(points)//2
     l_points = points[:mid]
     r_points = points[mid:]
@@ -53,17 +56,17 @@ def DnC(points, dimension):
         best, index1, index2 = l_best, l_index1, l_index2
     else:
         best, index1, index2 = r_best, r_index1, r_index2
-    # l_points.sort(key=lambda x:x[1][nextdimension])
-    # r_points.sort(key=lambda x:x[1][nextdimension])
+    l_points = sort.merge_sort(l_points, lambda x:x[1][nextdimension])
+    r_points = sort.merge_sort(r_points, lambda x:x[1][nextdimension])
 
     l_mid = []
     for i in range(len(l_points)):
-        if midpoint - l_points[i][1][dimension] < best:
+        if midpoint - l_points[i][1][dimension] <= best:
             l_mid.append(l_points[i])
             
     r_mid = []
     for i in range(len(r_points)):
-        if r_points[i][1][dimension] - midpoint < best:
+        if r_points[i][1][dimension] - midpoint <= best:
             r_mid.append(r_points[i])
             
     r_start = 0
