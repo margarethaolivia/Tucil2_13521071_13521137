@@ -1,5 +1,4 @@
-# Pencarian Pasangan Titik Terdekat 3D
-
+# Program Pencarian Pasangan Titik Terdekat
 
 ## Table of Contents
 
@@ -11,17 +10,13 @@
 
 ## General Information
 
-
 ## Features
-
 
 ## Usage
 
-
 ## Project Directories
-
 
 ## Author
 
-Margaretha Olivia Haryono (13521071)
-Michael Utama (13521137)
+- Margaretha Olivia Haryono (13521071)
+- Michael Utama (13521137)

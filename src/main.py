@@ -46,12 +46,17 @@ def printVisualization(points, p1, p2):
 print("        PENCARIAN PASANGAN TITIK TERDEKAT          ")
 print("===================================================")
 n = int(input("Masukkan banyaknya titik : "))
-r = int(input("Masukkan dimensi vektor  : "))
+# n input validation
+while (n < 2):
+    print('Masukan tidak valid!')
+    n = int(input("Masukkan banyaknya titik  : "))
 
-# dimension input validation
-while (r < 2):
+r = int(input("Masukkan dimensi vektor  : "))
+# r input validation
+while (r <= 0):
     print('Masukan tidak valid!')
     r = int(input("Masukkan dimensi vektor  : "))
+
 print()
 
 # generate n points
