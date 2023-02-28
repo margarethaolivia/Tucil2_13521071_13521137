@@ -1,5 +1,4 @@
 import random
-import math
 import time
 import matplotlib.pyplot as plt
 
@@ -7,6 +6,7 @@ import dnc
 import bf
 
 
+# generate random points and add it into a list
 def generatePoints(n, r):
     points = []
     p = []
@@ -21,6 +21,7 @@ def generatePoints(n, r):
     return points, p
 
 
+# print a point
 def printPoint(point):
     print('(', end='')
     for i in range(len(point)-1):
@@ -28,6 +29,7 @@ def printPoint(point):
     print(point[r-1], end=')\n')
 
 
+# display gui for 3D points visualization
 def printVisualization(points, p1, p2):
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
@@ -45,10 +47,15 @@ print("        PENCARIAN PASANGAN TITIK TERDEKAT          ")
 print("===================================================")
 n = int(input("Masukkan banyaknya titik : "))
 r = int(input("Masukkan dimensi vektor  : "))
+
+# dimension input validation
+while (r < 2):
+    print('Masukan tidak valid!')
+    r = int(input("Masukkan dimensi vektor  : "))
 print()
 
+# generate n points
 points, p = generatePoints(n, r)
-
 print(f'MEMBANGKITKAN {n} TITIK ACAK')
 for point in points:
     printPoint(point)
@@ -57,11 +64,12 @@ print()
 print('Memproses dengan algoritma Brute Force...')
 print()
 
-# Brute Force
+# Brute Force algorithm
 startTime = time.time() * 1000
 closest, p1, p2, count = bf.bruteForce(n, r, points)
 endTime = time.time() * 1000
 
+# Brute Force statistics
 print('ALGORITMA BRUTEFORCE')
 print(f'Titik 1 : ', end='')
 printPoint(points[p1])
@@ -75,14 +83,13 @@ print()
 print('Memproses dengan algoritma Divide and Conquer...')
 print()
 
-# DnC
+# DnC algorithm
 startTime = time.time() * 1000
-closest, p2, p1, count = dnc.getClosestPair(p)
+closest, p1, p2, count = dnc.getClosestPair(p)
 endTime = time.time() * 1000
 
-
+# DnC statistics
 print('ALGORITMA DIVIDE AND CONQUER')
-# algo divide and conquer
 print(f'Titik 1 : ', end='')
 printPoint(points[p1])
 print(f'Titik 2 : ', end='')
@@ -91,6 +98,7 @@ print(f'Jarak   : {round(closest, 3)}')
 print(f'Banyak Perhitungan : {count}')
 print(f'Waktu Eksekusi     : {endTime - startTime} milisekon')
 
+# ask for visualization (3D only)
 if r == 3:
     print()
     show = input('Ingin menampilkan visualisasi? [Y/n] : ').lower()

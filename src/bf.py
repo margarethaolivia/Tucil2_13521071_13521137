@@ -1,6 +1,7 @@
 import math
 
 
+# Brute Force algorithm (calculate the distance for each pair of points)
 def bruteForce(n, r, points):
     closest = 999 ** 9
     count = 0
